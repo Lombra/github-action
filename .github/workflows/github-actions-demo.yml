@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [windows-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -40,6 +40,4 @@ jobs:
       run: dotnet pack --configuration Release
       
     - name: Publish the package to GPR
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      run: dotnet nuget push bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://nuget.pkg.github.com/Lombra/index.json
+      run: dotnet nuget push bin/Release/*.nupkg
