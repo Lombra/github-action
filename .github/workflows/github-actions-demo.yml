@@ -26,9 +26,18 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+        source-url: https://nuget.pkg.github.com/Lombra/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Install dependencies
       run: dotnet restore
       
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      
+    - name: Create the package
+      run: dotnet pack --configuration Release GitHubActions
+      
+    - name: Publish the package to GPR
+      run: dotnet nuget push GitHubActions/bin/Release/*.nupkg
