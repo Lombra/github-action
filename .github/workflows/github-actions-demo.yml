@@ -1,12 +1,6 @@
 name: build
 
-on:
-  push:
-  pull_request:
-    branches: [ main ]
-    paths:
-    - '**.cs'
-    - '**.csproj'
+on: push
 
 env:
   DOTNET_VERSION: '6.0.401' # The .NET SDK version to use
@@ -14,11 +8,8 @@ env:
 jobs:
   build:
 
-    name: build-${{matrix.os}}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
+    #name: build-${{matrix.os}}
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
