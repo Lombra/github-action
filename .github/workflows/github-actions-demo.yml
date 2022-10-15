@@ -4,6 +4,7 @@ on: push
 
 env:
   DOTNET_VERSION: '6.0.401' # The .NET SDK version to use
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   build:
@@ -17,9 +18,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        source-url: https://nuget.pkg.github.com/Lombra/index.json
+        dotnet-quality: ga
+        source-url: https://code.lombra.net/api/packages/Lombra/nuget/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        NUGET_AUTH_TOKEN: ${{secrets.NUGET_AUTH_TOKEN}}
 
     - name: Install dependencies
       run: dotnet restore
